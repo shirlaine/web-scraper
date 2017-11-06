@@ -11,7 +11,6 @@ $`cd rails-template`
 
 $`bundle install`
 
-
 ## Database Setup
 - `$ bin/rake db:create`
 
