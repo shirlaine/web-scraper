@@ -1,24 +1,25 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Description
+This repository contains a quickstart template for a new rails app using the postgresql database, and rspec testing framework
 
-Things you may want to cover:
+## Gem List
+- Development:
+  - Bootstrap
+  - Jquery-Rails
+  - Simple_form
+  - Rubocop
+  - Faker
+  - Devise
 
-* Ruby version
+- Test:
+  - Rspec-rails
+  - Shoulda-Matchers
+  - Factory_bot_rails
+  - Rails-controller-testing
 
-* System dependencies
+## Database Setup
+- `$ bin/rake db:create`
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Integration Test Setup
+- under .circleci/config.yml, replace `rails-template` with `your-app-name`
