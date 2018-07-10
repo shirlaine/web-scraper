@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/rails-template
+    working_directory: ~/web-scraper-app
     docker:
       - image: circleci/ruby:2.4.1-node
         environment:
@@ -10,7 +10,7 @@ jobs:
           RAILS_ENV: test
       - image: circleci/postgres:9.6
         environment:
-          POSTGRES_DB: rails_template_test
+          POSTGRES_DB: web_scraper_app_test
           POSTGRES_USER: ubuntu
     steps:
       - checkout
