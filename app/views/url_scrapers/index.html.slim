@@ -1,1 +1,11 @@
-|testtttt
+/ -if flash[:notice].present?
+/   .alert.alert-success
+/     = flash[:notice]
+
+.container
+  h1 Index of all URLS
+  ol
+    - @urlscrapers.each do |url|
+        li = url.name
+
+  = button_to "Scrape Again", new_url_scraper_path, method: :get, class: "btn btn-info"
