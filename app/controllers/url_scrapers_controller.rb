@@ -12,13 +12,14 @@ class UrlScrapersController < ApplicationController
     ## TO DO
     ### check 
     ## doing RequesterService.new(url).call will give the response
-    ## you want to get the params(url input from view) into the RequesterService
+    ## you want to get the params(url input from view) into the RequesterService and get the service to give you back response
+    @response = RequesterService.new(@urlscraper.name).call
+    byebug
     if @urlscraper.save
       flash[:notice] = "Your url has been sucessfully saved"
       ## scrape file frm URL
       ## save content into text file
       ## Download file 
-
       redirect_to url_scrapers_path
     else
       flash[:notice] = "Can't scrape if no URL!"
