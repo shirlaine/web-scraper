@@ -8,7 +8,7 @@ class RequesterService
 
   def call
     uri = URI(@url)
-    response = Net::HTTP.get(uri)
-    puts response
+    content = Net::HTTP.get(uri)
+    content
   end
 end
