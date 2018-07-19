@@ -2,8 +2,8 @@ class UrlscrapeActivateService
   def initialize(url)
     @url = url
      # change this line for different backends
-    @backend = StupidBackendService.new
-    # @backend = CacheBackend.new(20)
+    # @backend = StupidBackendService.new
+    @backend = CacheBackendService.new(30)
     @requester = RequesterService.new(url)
   end
 

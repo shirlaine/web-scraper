@@ -16,7 +16,7 @@ class UrlScrapersController < ApplicationController
     ### check 
     ## doing RequesterService.new(url).call will give the response
     ## you want to get the params(url input from view) into the RequesterService and get the service to give you back response
-    byebug
+
     @urlscraper = Webscraper.new(name: @url, content: @content)
     if @urlscraper.save
       flash[:notice] = "Your url has been sucessfully saved"
