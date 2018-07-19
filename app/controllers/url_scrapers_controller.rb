@@ -8,13 +8,16 @@ class UrlScrapersController < ApplicationController
   end
   
   def create
-    @urlscraper = Webscraper.new(url_scraper_params)
+    @url = url_scraper_params[:name]
+
+    @content = UrlscrapeActivateService.new(@url).scrape
+    # @urlscraper = Webscraper.new(url_scraper_params)
     ## TO DO
     ### check 
     ## doing RequesterService.new(url).call will give the response
     ## you want to get the params(url input from view) into the RequesterService and get the service to give you back response
-    @response = RequesterService.new(@urlscraper.name).call
     byebug
+    @urlscraper = Webscraper.new(name: @url, content: @content)
     if @urlscraper.save
       flash[:notice] = "Your url has been sucessfully saved"
       ## scrape file frm URL

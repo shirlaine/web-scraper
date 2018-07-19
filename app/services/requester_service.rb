@@ -6,8 +6,9 @@ class RequesterService
     @url = url
   end
 
-  def call
+  def get
     uri = URI(@url)
     @response = Net::HTTP.get(uri)
+    @response.encode('UTF-8', invalid: :replace, undef: :replace)
   end
 end
