@@ -6,5 +6,5 @@
   h1 URL Scraper Tool
 
   = simple_form_for @urlscraper, url: url_scrapers_path, method: :post do |f|
-    = f.input :name, placeholder: 'Enter URL here'
+    = f.input :name, placeholder: 'Enter URL here' 
     = f.button :submit, 'Scrape it!', class: 'btn btn-primary'
