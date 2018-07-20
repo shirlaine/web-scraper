@@ -37,6 +37,9 @@ class UrlScrapersController < ApplicationController
       flash[:notice] = "Can't scrape if no URL!"
       render :new
     end
+  rescue RequesterService::NetworkError
+    flash[:notice] = "URL is empty"
+    redirect_to url_scrapers_path
   end
 
   private
