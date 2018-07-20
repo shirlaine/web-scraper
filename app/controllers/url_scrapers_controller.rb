@@ -20,13 +20,13 @@ class UrlScrapersController < ApplicationController
     if @existing_url.present?
       @time_lapse = Time.now - @existing_url.updated_at
       ## set at 30 seconds in order to save to database again
-      if @time_lapse > 12
+      if @time_lapse > 10
         @existing_url.update(name: @url, content: @content)
         flash[:notice] = "Your url has been scraped again, content has been refreshed."
       # render :new
         redirect_to url_scrapers_path
       else
-        flash[:notice] = "Your url has been just scraped ago, please wait #{30- @time_lapse.floor} seconds to try again."
+        flash[:notice] = "Your url has been just scraped ago, please wait #{10- @time_lapse.floor} seconds to try again."
         render :new
       end
     # save
@@ -37,7 +37,6 @@ class UrlScrapersController < ApplicationController
       flash[:notice] = "Can't scrape if no URL!"
       render :new
     end
-    ## check time now if time does not exceed, save to database 
   end
 
   private
