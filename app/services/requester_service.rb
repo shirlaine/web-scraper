@@ -22,7 +22,7 @@ class RequesterService
       @response = Net::HTTP.get(uri)
     rescue Timeout::Error, Errno::EINVAL, Errno::ECONNREFUSED, Errno::ECONNRESET, EOFError,
       Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
-      raise NetworkError
+      raise NetworkError.new("URL cannot be empty")
     end
     @response.encode('UTF-8', invalid: :replace, undef: :replace)
   end
