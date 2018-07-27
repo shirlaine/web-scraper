@@ -1,7 +1,6 @@
 require 'net/http'
 
 class RequesterService
-
   class NetworkError < StandardError; end
   ##all this service to get the response
   def initialize(url)

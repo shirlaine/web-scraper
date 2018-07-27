@@ -11,7 +11,6 @@ class UrlScrapersController < ApplicationController
   
   def create
     SaveScraperService.new(@urlscraper).fetch!
-
     flash[:notice] = "Your url has been scraped, content has been refreshed."
     redirect_to url_scrapers_path
   rescue StandardError => e
