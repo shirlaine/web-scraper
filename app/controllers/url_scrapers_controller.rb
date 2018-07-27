@@ -3,17 +3,17 @@ class UrlScrapersController < ApplicationController
 
   def index
     @urlscrapers = Webscraper.all
-  end 
+  end
 
   def new
     @urlscraper = Webscraper.new
   end
-  
+
   def create
     SaveScraperService.new(@urlscraper).fetch!
     flash[:notice] = "Your url has been scraped, content has been refreshed."
     redirect_to url_scrapers_path
-  rescue StandardError => e
+  rescue SaveScraperService::NoUrlError, SaveScraperService::DatabaseError, SaveScraperService::RecentlyScrapedError => e
     flash.now[:notice] = e.message
     render :new
   end

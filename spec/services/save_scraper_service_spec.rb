@@ -13,38 +13,48 @@ RSpec.describe SaveScraperService do
 
 
   describe ".fetch!" do
-    it "should raise an error if no url" do
-      scraper = Webscraper.new(name: nil)
-      scraper_service = SaveScraperService.new(scraper)
-      expect { scraper_service.fetch! }.to raise_error SaveScraperService::SaveScraperError
+
+    context "name is nil" do
+      let(:scraper) { build(:webscraper, name: nil) }
+      let(:scraper_service) { SaveScraperService.new(scraper) }
+
+      it "should raise an error if no url" do
+        expect { scraper_service.fetch! }.to raise_error SaveScraperService::NoUrlError
+      end
     end
 
-    it "should raise a not fresh error if recently scraped" do
-      scraper = create(:webscraper, name: "http://www.google.com")
-      allow(scraper).to receive(:fresh?).and_return true
-      scraper_service = SaveScraperService.new(scraper)
-      expect { scraper_service.fetch! }.to raise_error SaveScraperService::SaveScraperError
-    end
+    context "name is not nil" do
+      let(:scraper) { create(:webscraper, name: "http://www.google.com") }
+      let(:scraper_service) { SaveScraperService.new(scraper) }
 
-    it "should raise and error if the scraper update fails" do
-      scraper = create(:webscraper, name: "http://www.google.com")
-      allow(scraper).to receive(:fresh?).and_return false
-      allow(scraper).to receive(:update).and_return false
+      context "urlscraper is fresh" do
+        before(:each) do
+          allow(scraper).to receive(:fresh?).and_return true
+        end
 
-      scraper_service = SaveScraperService.new(scraper)
-      expect { scraper_service.fetch! }.to raise_error SaveScraperService::SaveScraperError
-    end
+        it "should raise a not fresh error if recently scraped" do
+          expect { scraper_service.fetch! }.to raise_error SaveScraperService::RecentlyScrapedError
+        end
+      end
 
-    it "should save a scrape to the database" do
-      scraper = create(:webscraper, name: "http://www.google.com")
-      allow(scraper).to receive(:fresh?).and_return false
-      scraper_service = SaveScraperService.new(scraper)
+      context "urlscraper is not fresh" do
+        before(:each) do
+          allow(scraper).to receive(:fresh?).and_return false
+        end
 
-      allow(scraper_service).to receive(:get_content).and_return("some content")
-      scraper_service.fetch!
+        it "should raise and error if the scraper update fails" do
+          allow(scraper).to receive(:update).and_return false
+          expect { scraper_service.fetch! }.to raise_error SaveScraperService::DatabaseError
+        end
 
-      scrape = Webscraper.last
-      expect(scrape.content).to eq "some content"
+        it "should save a scrape to the database" do
+          content = "some content"
+          allow(scraper_service).to receive(:get_content).and_return(content)
+          scraper_service.fetch!
+          scrape = Webscraper.last
+          expect(scrape.content).to eq content
+        end
+      end
     end
   end
 end

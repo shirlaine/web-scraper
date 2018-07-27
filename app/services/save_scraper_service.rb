@@ -1,5 +1,7 @@
 class SaveScraperService
-  class SaveScraperError < StandardError; end
+  class NoUrlError < StandardError; end
+  class DatabaseError < StandardError; end
+  class RecentlyScrapedError < StandardError; end
 
   NO_URL_ERROR = "Can't scrape if no URL!"
   DATABASE_ERROR = "Ouch... unable to save!"
@@ -10,15 +12,15 @@ class SaveScraperService
   end
 
   def fetch!
-    raise SaveScraperError.new(NO_URL_ERROR) if @urlscraper.name.nil?
+    raise NoUrlError.new(NO_URL_ERROR) if @urlscraper.name.nil?
 
     if @urlscraper.fresh?
       message = NOT_FRESH_ERROR % [@urlscraper.time_to_next_refresh]
-      raise SaveScraperError.new(message)
+      raise RecentlyScrapedError.new(message)
     end
 
     unless @urlscraper.update(content: get_content(@urlscraper.name))
-      raise SaveScraperError.new(DATABASE_ERROR)
+      raise DatabaseError.new(DATABASE_ERROR)
     end
   end
 
