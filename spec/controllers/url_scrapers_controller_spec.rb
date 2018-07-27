@@ -1,31 +1,27 @@
 require 'rails_helper'
 
 RSpec.describe UrlScrapersController, type: :controller do
-  
+
   # let(:webscraper) { create(:webscraper) }
   # let(:webscraper) do
   #   webscraper = Webscraper.create(
   #     name: "https://smth.com/users",
   #     content: "some text content response"
   #   )
-  end    
+  # end
 
   describe 'Get#index' do
-    let!(:webscraper) { create(:webscraper) }
     it 'should return an empty array when no urls are scraped' do
-      get :index 
-      byebug
+      get :index
+      expect(response.code).to eq "200"
       expect(assigns(:urlscapers)).to be_nil
     end
 
-    it 'should return an array with 1 element when 1 url is scraped' do
-      # webscraper = Webscraper.create(
-      # name: "https://smth.com/users",
-      # content: "some text content response"
-      # )
-      # let(:webscraper) { create(:webscraper) }
+    it 'should return an array with 3 element when 3 url is scraped' do
+      create_list(:webscraper, 3)
       get :index
-      expect(assigns(:urlscrapers).size).to eq 1  
+      expect(response.code).to eq "200"
+      expect(assigns(:urlscrapers).size).to eq 3
     end
   end
 
@@ -36,7 +32,7 @@ RSpec.describe UrlScrapersController, type: :controller do
         get :new
         expect(assigns(:urlscraper)).to be_a_new(Webscraper)
       end
-    end 
+    end
   end
 
   describe 'Post#create' do
@@ -49,11 +45,11 @@ RSpec.describe UrlScrapersController, type: :controller do
       post :create, params: { webscraper: { name: "smth" } }
     end
     ## happy path
-    ### calls service object, flash message and redirect 
-    xit { expect(Webscraper.count).to eq(1) } 
+    ### calls service object, flash message and redirect
+    xit { expect(Webscraper.count).to eq(1) }
     ## unhappy path
     ### calls service object, rescues error, flash message and render new
-  end 
+  end
 
 end
 
