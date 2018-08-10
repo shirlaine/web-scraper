@@ -1,4 +1,5 @@
 class UrlScrapersController < ApplicationController
+  before_action :authenticate_user!
   def index
     @urlscrapers = Webscraper.all
   end 
