@@ -1,11 +1,8 @@
 class UrlScrapersController < ApplicationController
-<<<<<<< HEAD
   
   before_action :fetch_scraper, only: [:create]
 
-=======
   before_action :authenticate_user!
->>>>>>> master
   def index
     @urlscrapers = Webscraper.all
   end 
