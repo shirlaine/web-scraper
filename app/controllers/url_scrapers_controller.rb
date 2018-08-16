@@ -1,4 +1,5 @@
 class UrlScrapersController < ApplicationController
+  
   before_action :fetch_scraper, only: [:create]
 
   def index
