@@ -1,5 +1,4 @@
 class CacheBackendService 
-
   def initialize(ttl)
     @ttl = ttl
   end
@@ -9,7 +8,6 @@ class CacheBackendService
     
     time_stamp = File.open("./#{name}.txt").read.lines.first.delete("\n").to_i #timestamp saved in file
     time_now = Time.now.to_i
-  
     
     if time_now - time_stamp > @ttl # if longer than ttl, fetch again
       puts "Fetching content again"
@@ -26,5 +24,4 @@ class CacheBackendService
     puts time_stamp
     File.write("./#{name}.txt", "#{time_stamp}\n#{response} ") # save timestamp in first line of reponse
   end
-
 end

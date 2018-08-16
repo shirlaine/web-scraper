@@ -1,7 +1,6 @@
 require 'net/http'
 
 class RequesterService
-
   class NetworkError < StandardError; end
   ##all this service to get the response
   def initialize(url)
@@ -22,7 +21,7 @@ class RequesterService
       @response = Net::HTTP.get(uri)
     rescue Timeout::Error, Errno::EINVAL, Errno::ECONNREFUSED, Errno::ECONNRESET, EOFError,
       Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
-      raise NetworkError
+      raise NetworkError.new("URL cannot be empty")
     end
     @response.encode('UTF-8', invalid: :replace, undef: :replace)
   end
