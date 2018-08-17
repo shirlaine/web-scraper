@@ -4,16 +4,17 @@
 
 .container
   h1 Index of all URLS
-  table.table-striped.table-bordered
+  table.table-striped.table-bordered.table-responsive-sm
     thead 
       th URL Name 
       th Content
+      th User
     - @urlscrapers.each do |url|
       tbody
         td = url.name 
         td = url.content.truncate(155)
-        /  = url.name + " CONTENT => "+ url.content.truncate(155)
-
+        - url.users.each do |user|
+          td = user.username
   br
   = button_to "Scrape Again", new_url_scraper_path, method: :get, class: "btn btn-info"
   br

@@ -1,16 +1,18 @@
 class UrlScrapersController < ApplicationController
-  
   before_action :fetch_scraper, only: [:create]
+  before_action :authenticate_user!, only: [:new, :create]
   def index
     @urlscrapers = Webscraper.all
   end 
 
   def new
     @urlscraper = Webscraper.new
+    @urlwebscraper = UserWebscraper.new
   end
   
   def create
     SaveScraperService.new(@urlscraper).fetch!
+    @urlwebscraper = UserWebscraper.create(user: current_user, webscraper: @urlscraper)
     flash[:notice] = "Your url has been scraped, content has been refreshed."
     redirect_to url_scrapers_path
   rescue StandardError => e
