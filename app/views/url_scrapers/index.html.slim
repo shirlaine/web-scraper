@@ -4,12 +4,19 @@
 
 .container
   h1 Index of all URLS
-  ol
+  table.table-striped.table-bordered
+    thead 
+      th URL Name 
+      th Content
     - @urlscrapers.each do |url|
-        li = url.name
-
-  = button_to "Scrape Again", new_url_scraper_path, method: :get, class: "btn btn-info"
+      tbody
+        td = url.name 
+        td = url.content.truncate(155)
+        /  = url.name + " CONTENT => "+ url.content.truncate(155)
 
   br
-
+  = button_to "Scrape Again", new_url_scraper_path, method: :get, class: "btn btn-info"
+  br
   = button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-danger", data: { confirm: 'Are you sure you want to sign out?' }
+  br
+  = button_to "List of URLs", url_scrapers_path, method: :get, class: "btn btn-primary"
