@@ -7,4 +7,11 @@
 
   = simple_form_for @urlscraper, url: url_scrapers_path, method: :post do |f|
     = f.input :name, placeholder: 'Enter URL here' 
-    = f.button :submit, 'Scrape it!', class: 'btn btn-primary'
+    = f.button :submit, 'Scrape it!', class: 'btn btn-info  '
+
+  br
+  = button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-danger", data: { confirm: 'Are you sure you want to sign out?' }
+  br
+  = button_to "List of URLs", url_scrapers_path, method: :get, class: "btn btn-primary"
+  br
+  | Currently signed in as "#{current_user.username}"

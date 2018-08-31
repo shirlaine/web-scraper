@@ -1,4 +1,4 @@
 class Scrape < ApplicationRecord
   belongs_to :webscraper
-  validates :scraped_content, presence: true
+  validates :scrape_content, presence: true
 end

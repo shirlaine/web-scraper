@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20180831040336) do
   enable_extension "plpgsql"
 
   create_table "scrapes", force: :cascade do |t|
-    t.text "scraped_content", null: false
+    t.text "scrape_content", null: false
     t.bigint "webscraper_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

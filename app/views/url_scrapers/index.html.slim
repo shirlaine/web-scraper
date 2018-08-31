@@ -2,22 +2,25 @@
 /   .alert.alert-success
 /     = flash[:notice]
 
-.container
+.container[style="margin: 40px; padding: 0;"]
   h1 Index of all URLS
   table.table-striped.table-bordered.table-responsive-sm
     thead 
       th URL Name 
-      th Content
-      th User
+      th Scrapped Content
+      th User 
     - @urlscrapers.each do |url|
       tbody
         td = url.name 
-        td = url.content.truncate(155)
-        - url.users.each do |user|
-          td = user.username
+        td = url.scrapes.last.scrape_content.truncate(155)
+        td= url.users.last.username
+        td = url.users.last.username
+        
   br
   = button_to "Scrape Again", new_url_scraper_path, method: :get, class: "btn btn-info"
   br
   = button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-danger", data: { confirm: 'Are you sure you want to sign out?' }
   br
   = button_to "List of URLs", url_scrapers_path, method: :get, class: "btn btn-primary"
+  br
+  | Currently signed in as "#{current_user.username}"
