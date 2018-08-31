@@ -12,7 +12,7 @@ class SaveScraperService
   def fetch!
     raise SaveScraperError.new(NO_URL_ERROR) if @urlscraper.name.nil?
 
-    if @urlscraper.fresh?
+    if @urlscraper.fresh? #if not fresh, scrape, still fresh don't scrape
       message = NOT_FRESH_ERROR % [@urlscraper.time_to_next_refresh]
       raise SaveScraperError.new(message)
     end
@@ -21,7 +21,7 @@ class SaveScraperService
       raise SaveScraperError.new(DATABASE_ERROR)
     end
   end
-
+  
   private
 
   def get_content(url)

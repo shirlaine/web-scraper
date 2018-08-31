@@ -2,7 +2,9 @@ class Webscraper < ApplicationRecord
 
   has_many :user_webscrapers
   has_many :users, through: :user_webscrapers, dependent: :destroy
+  has_many :scrapes
   validates :name, presence: true
+  
 
   REFRESH_TIMEOUT = 10
 
