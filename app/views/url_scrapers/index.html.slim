@@ -12,7 +12,7 @@
     - @urlscrapers.each do |url|
       tbody
         td = url.name 
-        td = url.scrapes.last.scrape_content.truncate(155)
+        / td = url.scrapes.last.scrape_content.truncate(155)
         td= url.users.last.username
         td = url.users.last.username
         
