@@ -15,7 +15,9 @@
         td = url.scrapes.last.scrape_content.truncate(155)
         td= url.users.last.username
         td = url.users.last.username
-        
+
+  = @obj.read
+
   br
   = button_to "Scrape Again", new_url_scraper_path, method: :get, class: "btn btn-info"
   br
