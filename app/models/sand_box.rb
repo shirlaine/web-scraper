@@ -1,0 +1,2 @@
+class SandBox < ApplicationRecord
+end

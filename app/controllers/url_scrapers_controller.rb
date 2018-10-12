@@ -17,6 +17,8 @@ class UrlScrapersController < ApplicationController
     SaveScraperService.new(@urlscraper).fetch!
     @urlwebscraper = UserWebscraper.create(user: current_user, webscraper: @urlscraper)
     # @scraped = Scrape.create(webscraper: @urlscraper, scrape_content: @urlscraper.content)
+
+    ScrapeWorker.perform_async("27/9/2018")
     ## fix logic here webscraper != @urlscraper
     @scraped = Scrape.create(webscraper: @urlscraper, scrape_content: "some content")
     s3 = Aws::S3::Resource.new
