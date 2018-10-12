@@ -3,6 +3,9 @@ class UrlScrapersController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
   def index
     @urlscrapers = Webscraper.all
+    ## find a way to get the obj from s3 to an instance variable in index
+    ## find the bucket
+    # find the object, return 
   end 
 
   def new
@@ -14,7 +17,14 @@ class UrlScrapersController < ApplicationController
     SaveScraperService.new(@urlscraper).fetch!
     @urlwebscraper = UserWebscraper.create(user: current_user, webscraper: @urlscraper)
     # @scraped = Scrape.create(webscraper: @urlscraper, scrape_content: @urlscraper.content)
+
     ScrapeWorker.perform_async("27/9/2018")
+    ## fix logic here webscraper != @urlscraper
+    @scraped = Scrape.create(webscraper: @urlscraper, scrape_content: "some content")
+    s3 = Aws::S3::Resource.new
+    obj = s3.bucket('rails-learning-s').object("shir/#{@scraped.id}")
+    obj.put(body: @urlscraper.content)
+
     flash[:notice] = "Your url has been scraped, content has been refreshed."
     redirect_to url_scrapers_path
   rescue StandardError => e
